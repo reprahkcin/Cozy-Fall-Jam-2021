@@ -115,4 +115,24 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+
+    // --------------------------------------------------
+    // HUD - UI Panels
+    // --------------------------------------------------
+
+    public GameObject[] panels;
+
+    // Set panel to active
+    public void SetPanelActive(int index)
+    {
+        // For each panel, deactivate
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(false);
+        }
+
+        // Activate panel at index
+        panels[index].SetActive(true);
+    }
+
 }
