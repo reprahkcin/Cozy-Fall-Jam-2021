@@ -59,7 +59,18 @@ public class GameManager : MonoBehaviour
     // TODO: Add Game States
     public bool gamePaused = false;
 
+    public void ToggleGamePaused()
+    {
+        gamePaused = !gamePaused;
+    }
 
+
+
+    // points
+    public int score;
+
+    // time/clock
+    public float time;
 
 
 }

@@ -1224,14 +1224,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b53857c263b7f47b4b76344cd80c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
   pointsText: {fileID: 728179865}
-  time: 0
   timeText: {fileID: 1692833316}
   feedbackText: {fileID: 0}
   healthBar: {fileID: 1075512072}
   pauseButton: {fileID: 629530252}
   panels: []
+  introPanel: {fileID: 2096088216}
+  losePanel: {fileID: 987276587}
+  winPanel: {fileID: 1825994466}
+  hudPanel: {fileID: 1750633737}
+  pausePanel: {fileID: 1921639510}
 --- !u!114 &1169439636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,6 +1251,8 @@ MonoBehaviour:
   playerDamage: 10
   playerSpeed: 5
   gamePaused: 0
+  score: 0
+  time: 0
 --- !u!4 &1169439637
 Transform:
   m_ObjectHideFlags: 0

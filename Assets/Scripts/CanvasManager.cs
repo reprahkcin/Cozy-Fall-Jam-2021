@@ -25,29 +25,28 @@ public class CanvasManager : MonoBehaviour
     // HUD - UI Text Readouts
     // --------------------------------------------------
 
-    // points
-    public int score;
+
     public TextMeshProUGUI pointsText;
 
     // Update points in HUD
     public void UpdateScore()
     {
-        pointsText.text = "Score: " + score;
+        pointsText.text = "Score: " + GameManager.instance.score;
     }
 
 
     // time
-    public float time;
+
     public TextMeshProUGUI timeText;
     public void SetTime(int time)
     {
-        this.time = time;
+        GameManager.instance.time = time;
     }
 
     // Update time in HUD
     public void UpdateTime()
     {
-        timeText.text = "Time: " + time.ToString("F2"); // F2 = 2 decimal places
+        timeText.text = "Time: " + GameManager.instance.time.ToString("F2"); // F2 = 2 decimal places
     }
 
     // feedback
@@ -55,7 +54,7 @@ public class CanvasManager : MonoBehaviour
 
     public void AddPoints(int points)
     {
-        this.score += points;
+        GameManager.instance.score += points;
     }
 
     public void SetFeedback(string feedback)
@@ -122,17 +121,64 @@ public class CanvasManager : MonoBehaviour
 
     public GameObject[] panels;
 
-    // Set panel to active
-    public void SetPanelActive(int index)
+    // Intro Panel
+    public GameObject introPanel;
+
+    // Lose Panel
+    public GameObject losePanel;
+
+    // Win Panel
+    public GameObject winPanel;
+
+    // HUD Panel
+    public GameObject hudPanel;
+
+    // Pause/Instructions Panel
+    public GameObject pausePanel;
+
+    // Deactivate all panels
+    // TODO: Load all panels into array, even specific panels above
+    public void DeactivateAllPanels()
     {
-        // For each panel, deactivate
         foreach (GameObject panel in panels)
         {
             panel.SetActive(false);
         }
-
-        // Activate panel at index
-        panels[index].SetActive(true);
     }
+
+    // Activate Intro Panel
+    public void ActivateIntroPanel()
+    {
+        DeactivateAllPanels();
+        introPanel.SetActive(true);
+    }
+
+    // Activate Lose Panel
+    public void ActivateLosePanel()
+    {
+        DeactivateAllPanels();
+        losePanel.SetActive(true);
+    }
+
+    // Activate Win Panel
+    public void ActivateWinPanel()
+    {
+        DeactivateAllPanels();
+        winPanel.SetActive(true);
+    }
+
+    // Activate HUD Panel
+    public void ActivateHUDPanel()
+    {
+        DeactivateAllPanels();
+        hudPanel.SetActive(true);
+    }
+
+    // Activate Pause Panel
+    public void ActivatePausePanel()
+    {
+        pausePanel.SetActive(true);
+    }
+
 
 }
