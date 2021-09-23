@@ -21,6 +21,13 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        UpdateHealthBar();
+        UpdateScore();
+        UpdateTime();
+    }
+
     // --------------------------------------------------
     // HUD - UI Text Readouts
     // --------------------------------------------------
@@ -29,38 +36,24 @@ public class CanvasManager : MonoBehaviour
     public TextMeshProUGUI pointsText;
 
     // Update points in HUD
-    public void UpdateScore()
-    {
-        pointsText.text = "Score: " + GameManager.instance.score;
-    }
+    public void UpdateScore() => pointsText.text = "Score: " + GameManager.instance.score;
 
 
     // time
-
     public TextMeshProUGUI timeText;
-    public void SetTime(int time)
-    {
-        GameManager.instance.time = time;
-    }
 
     // Update time in HUD
-    public void UpdateTime()
-    {
-        timeText.text = "Time: " + GameManager.instance.time.ToString("F2"); // F2 = 2 decimal places
-    }
+    public void UpdateTime() => timeText.text = "Time: " + GameManager.instance.time;
 
     // feedback
     public TextMeshProUGUI feedbackText;
 
-    public void AddPoints(int points)
-    {
-        GameManager.instance.score += points;
-    }
+    public void AddPoints(int points) => GameManager.instance.score += points;
 
-    public void SetFeedback(string feedback)
+    public void SetFeedback(string feedback, float duration)
     {
         feedbackText.text = feedback;
-        StartCoroutine(ClearFeedback(3.0f));
+        StartCoroutine(ClearFeedback(duration));
     }
 
     IEnumerator ClearFeedback(float seconds)
@@ -175,10 +168,9 @@ public class CanvasManager : MonoBehaviour
     }
 
     // Activate Pause Panel
-    public void ActivatePausePanel()
-    {
-        pausePanel.SetActive(true);
-    }
+    public void ActivatePausePanel() => pausePanel.SetActive(true);
 
+    // Deactivate Pause Panel
+    public void DeactivatePausePanel() => pausePanel.SetActive(false);
 
 }
