@@ -28,11 +28,6 @@ public class GameManager : MonoBehaviour
         CanvasManager.instance.ActivateIntroPanel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void FixedUpdate()
     {
@@ -42,27 +37,13 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // --------------------------------------------------
-    // Player
-    // --------------------------------------------------
-
-    // Player Health
-    public float playerHealth = 100;
-
-    // Player Damage
-    public float playerDamage = 10;
-
-    // Player Speed
-    public float playerSpeed = 5f;
-
-    public void AdjustPlayerHealth(int amount) => playerHealth += amount;
 
     // --------------------------------------------------
     // Game Variables
     // --------------------------------------------------
 
-    // points
-    public int score;
+    // Defense Points
+    public int defensePoints = 10;
 
     // time/clock
     public float time;
@@ -70,6 +51,9 @@ public class GameManager : MonoBehaviour
 
     // Current Level
     public int currentLevel;
+
+
+
 
     // --------------------------------------------------
     // Game States and Settings
@@ -83,7 +67,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        gamePaused = false;
         // TODO: Any clocks or timers should be addressed here
         // TODO: 3...2...1...GO! animation
         CanvasManager.instance.ActivateHUDPanel();
@@ -101,7 +84,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         CanvasManager.instance.SetFeedback("GO!", 1.0f);
         yield return new WaitForSeconds(1.0f);
-
+        gamePaused = false;
+        SpawnWave();
     }
     public void LoseGame()
     {
@@ -129,6 +113,53 @@ public class GameManager : MonoBehaviour
 
     public void ResetComplete() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+
+
+    // --------------------------------------------------
+    // Enemy Spawning
+    // --------------------------------------------------
+    public Transform spawnPoint;
+
+    public GameObject enemyPrefab;
+
+    public int enemiesInWave = 10;
+
+    public int currentWave = 0;
+
+    public int numWaves = 3;
+
+    public List<Enemy> enemies;
+
+    // Spawns an enemy at the spawn point
+    public void SpawnEnemy()
+    {
+        // Instantiate enemy at spawn point
+        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        // Add enemy to list
+        enemies.Add(enemy.GetComponent<Enemy>());
+    }
+
+    // Spawns a wave of enemies
+    public void SpawnWave()
+    {
+        // Spawn enemies
+        StartCoroutine(SpawnEnemies());
+
+        // Increment wave
+        currentWave++;
+    }
+
+    // Delay between spawns
+    IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < enemiesInWave; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(1f);
+
+        }
+    }
 
 
 
