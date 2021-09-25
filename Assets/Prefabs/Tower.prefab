@@ -79,7 +79,8 @@ MonoBehaviour:
   fireRate: 0.5
   fireRange: 5
   bulletSpeed: 20
-  bulletDamage: 10
+  bulletDamage: 1
+  canFire: 1
   squirrelNest: {fileID: 4108649839607914665}
   enemiesInRange: []
 --- !u!1001 &6536078925952481189

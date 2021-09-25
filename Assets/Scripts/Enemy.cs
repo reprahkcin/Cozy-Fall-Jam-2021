@@ -10,75 +10,90 @@ public class Enemy : MonoBehaviour
 
     private Transform target;
 
-    private int wayPointIndex = 0;
+    private int wayPointIndex = 1;
 
-    // void Start()
-    // {
-    //     target = WayPoints.points[0];
-    // }
+    public List<Transform> wayPoints;
 
-    // void FixedUpdate()
-    // {
-    //     // If game is not paused
-    //     if (!GameManager.instance.gamePaused)
-    //     {
+    public void SetPath(List<Transform> newPath)
+    {
+        wayPoints = new List<Transform>(newPath);
+    }
 
-    //         // Move rb to the target position
-    //         Vector3 dir = target.position - transform.position;
-    //         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
 
-    //         // If the distance between the enemy and the target is less than 0.2f, move to the next waypoint
-    //         if (Vector3.Distance(transform.position, target.position) < 0.2f)
-    //         {
-    //             GetNextWayPoint();
-    //         }
+    private void Start()
+    {
+        wayPoints = new List<Transform>(WayPointManager.instance.pathA);
+        target = WayPointManager.instance.pathA[1];
+    }
 
-    //         // If health is less than or equal to 0, destroy the enemy
-    //         if (health <= 0)
-    //         {
-    //             Destroy(gameObject);
-    //         }
-    //     }
+    void FixedUpdate()
+    {
+        // If game is not paused
+        if (!GameManager.instance.gamePaused)
+        {
 
-    // }
+            // Move towards the target
+            Vector3 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
 
-    // void GetNextWayPoint()
-    // {
-    //     if (wayPointIndex >= WayPoints.points.Length - 1)
-    //     {
-    //         EndPath();
-    //         return;
-    //     }
+            // If the distance between the enemy and the target is less than 0.2f, move to the next waypoint
+            if (Vector3.Distance(transform.position, target.position) < 0.2f)
+            {
+                GetNextWayPoint();
+            }
 
-    //     wayPointIndex++;
-    //     target = WayPoints.points[wayPointIndex];
-    // }
+            // If health is less than or equal to 0, destroy the enemy
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
 
-    // void EndPath()
-    // {
+    }
 
-    //     Destroy(gameObject);
-    // }
+    void GetNextWayPoint()
+    {
+        if (wayPointIndex >= wayPoints.Count - 1)
+        {
+            EndPath();
+            return;
+        }
 
-    // public void TakeDamage(float amount)
-    // {
-    //     health -= amount;
+        wayPointIndex++;
+        target = wayPoints[wayPointIndex];
+    }
 
-    //     if (health <= 0)
-    //     {
-    //         // Remove self from GamaManager.instance.enemies
-    //         GameManager.instance.enemies.Remove(this.gameObject);
-    //         EndPath();
-    //     }
-    // }
+    void EndPath()
+    {
+        // Remove self from GameManager.instance.enemies
+        GameManager.instance.enemies.Remove(this.gameObject);
+        Destroy(gameObject);
+    }
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.tag == "Projectile")
-    //     {
-    //         TakeDamage(other.GetComponent<Projectile>().GetDamage());
-    //     }
-    // }
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+
+        if (health <= 0)
+        {
+            // Remove self from GamaManager.instance.enemies
+            GameManager.instance.enemies.Remove(this.gameObject);
+            EndPath();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Projectile")
+        {
+            TakeDamage(other.GetComponent<Projectile>().GetDamage());
+        }
+    }
+
 
 
 }

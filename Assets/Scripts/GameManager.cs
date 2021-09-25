@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour
     // --------------------------------------------------
     // Enemy Spawning
     // --------------------------------------------------
-    public Transform spawnPoint;
 
     public GameObject enemyPrefab;
 
@@ -137,9 +136,14 @@ public class GameManager : MonoBehaviour
     // Spawns an enemy at the spawn point
     public void SpawnEnemy()
     {
-        // Instantiate enemy at spawn point
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        //List<Transform> path = new List<Transform>(WayPointManager.instance.RandomPath());
+        //List<Transform> path = new List<Transform>(WayPointManager.instance.pathA);
 
+        // Instantiate enemy at WayPointManager.instance.pathA[0].position
+        GameObject enemy = Instantiate(enemyPrefab, WayPointManager.instance.pathA[0].position, Quaternion.identity);
+
+        // Set enemy's path
+        //enemy.GetComponent<Enemy>().SetPath(path);
         // Add enemy to list
         enemies.Add(enemy);
     }

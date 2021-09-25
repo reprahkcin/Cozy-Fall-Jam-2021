@@ -74,6 +74,7 @@ public class Tower : MonoBehaviour
             // create bullet as child of tower
             GameObject bulletClone = Instantiate(bullet, squirrelNest.position, Quaternion.identity);
             bulletClone.transform.parent = transform;
+            bulletClone.GetComponent<Projectile>().damage = bulletDamage;
             // fire the bullet at the enemy
             bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - squirrelNest.position).normalized * bulletSpeed;
 

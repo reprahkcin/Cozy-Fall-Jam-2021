@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public Transform target;
 
     // damage of the projectile (assigned at birth)
-    private float damage;
+    public float damage;
 
     // Get the damage of the projectile
     public float GetDamage()
@@ -21,9 +21,6 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Die());
-
-        // get bulletDamage from parent tower gameobject
-        damage = transform.parent.GetComponent<Tower>().bulletDamage;
     }
 
     IEnumerator Die()
