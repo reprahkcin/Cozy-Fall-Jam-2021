@@ -12,9 +12,12 @@ public class Tower : MonoBehaviour
 
     public float bulletSpeed = 10f;
 
-    //public float bulletDamage = 10f;
+    public float bulletDamage = 10f;
 
-    private bool canFire = true;
+
+    public bool canFire = true; // occupied by squirrel
+
+    public Transform squirrelNest;
 
 
     // make list of enemies in range
@@ -68,10 +71,11 @@ public class Tower : MonoBehaviour
     {
         if (canFire)
         {
-            // create bullet
-            GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
+            // create bullet as child of tower
+            GameObject bulletClone = Instantiate(bullet, squirrelNest.position, Quaternion.identity);
+            bulletClone.transform.parent = transform;
             // fire the bullet at the enemy
-            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - transform.position).normalized * bulletSpeed;
+            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - squirrelNest.position).normalized * bulletSpeed;
 
             canFire = false;
             StartCoroutine(FireCooldown());
