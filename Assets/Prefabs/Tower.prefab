@@ -110,7 +110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 3742385315364804950, guid: f8b05a8a1f64a7447aecd6a3f6fa40cc, type: 3}
   fireRate: 0.5
-  fireRange: 3
+  fireRange: 2
   bulletSpeed: 20
-  bulletDamage: 1
   enemiesInRange: []
