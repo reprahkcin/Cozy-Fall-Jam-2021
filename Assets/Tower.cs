@@ -6,17 +6,81 @@ public class Tower : MonoBehaviour
 {
     public GameObject bullet;
 
-    public float fireRate = 2f;
+    public float fireRate = 10f;
 
-    public float fireRange = 10f;
+    public float fireRange = 2f;
 
     public float bulletSpeed = 10f;
 
-    public float bulletDamage = 1f;
+    //public float bulletDamage = 10f;
+
+    private bool canFire = true;
+
 
     // make list of enemies in range
-    List<Enemy> enemiesInRange = new List<Enemy>();
+    public List<GameObject> enemiesInRange = new List<GameObject>();
+
+    private void Update()
+    {
+        enemiesInRange = new List<GameObject>();
+        // for each enemy in GameManager.instance.enemies
+        foreach (GameObject enemy in GameManager.instance.enemies)
+        {
+            // if enemy is in range
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= fireRange)
+            {
+                if (enemy != null)
+                {
+                    // add enemy to list
+                    enemiesInRange.Add(enemy);
+                }
+            }
+        }
 
 
 
+        // if list is not empty
+        if (enemiesInRange.Count > 0)
+        {
+            // find nearest enemy
+            GameObject nearestEnemy = enemiesInRange[0];
+            foreach (GameObject enemy in enemiesInRange)
+            {
+                if (enemy != null)
+                {
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, nearestEnemy.transform.position))
+                    {
+                        nearestEnemy = enemy;
+                    }
+                }
+            }
+
+            // if nearest enemy is not null
+            if (nearestEnemy != null)
+            {
+                Shoot(nearestEnemy);
+
+            }
+        }
+    }
+
+    void Shoot(GameObject enemy)
+    {
+        if (canFire)
+        {
+            // create bullet
+            GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
+            // fire the bullet at the enemy
+            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - transform.position).normalized * bulletSpeed;
+
+            canFire = false;
+            StartCoroutine(FireCooldown());
+        }
+    }
+
+    IEnumerator FireCooldown()
+    {
+        yield return new WaitForSeconds(fireRate);
+        canFire = true;
+    }
 }

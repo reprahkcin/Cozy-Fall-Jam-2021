@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // target to shoot at
+    public Transform target;
+    // speed of the projectile
+    public float speed = 70f;
+    // damage of the projectile
+    public float damage = 10;
+
+    public float lifetime = 0.3f;
+
+    private void Start()
     {
-        
+        StartCoroutine(Die());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Die()
     {
-        
+        yield return new WaitForSeconds(lifetime);
+        Destroy(gameObject);
     }
 }

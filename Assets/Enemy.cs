@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     public float speed = 10f;
 
+    public float health = 100;
+
     private Transform target;
 
     private int wayPointIndex = 0;
@@ -30,6 +32,12 @@ public class Enemy : MonoBehaviour
             {
                 GetNextWayPoint();
             }
+
+            // If health is less than or equal to 0, destroy the enemy
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
     }
@@ -52,7 +60,25 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
 
+        if (health <= 0)
+        {
+            // Remove self from GamaManager.instance.enemies
+            GameManager.instance.enemies.Remove(this.gameObject);
+            EndPath();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Projectile")
+        {
+            TakeDamage(other.GetComponent<Projectile>().damage);
+        }
+    }
 
 
 }

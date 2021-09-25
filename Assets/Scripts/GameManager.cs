@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        gamePaused = true;
+        //gamePaused = true;
         Debug.Log("You Win!");
         CanvasManager.instance.SetFeedback("You Win!", 3.0f);
         CanvasManager.instance.ActivateWinPanel();
@@ -128,7 +128,11 @@ public class GameManager : MonoBehaviour
 
     public int numWaves = 3;
 
-    public List<Enemy> enemies;
+    public float waveDelay = 5.0f;
+
+    public float interEnemyDelay = 1f;
+
+    public List<GameObject> enemies;
 
     // Spawns an enemy at the spawn point
     public void SpawnEnemy()
@@ -137,7 +141,7 @@ public class GameManager : MonoBehaviour
         GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
         // Add enemy to list
-        enemies.Add(enemy.GetComponent<Enemy>());
+        enemies.Add(enemy);
     }
 
     // Spawns a wave of enemies
@@ -148,6 +152,14 @@ public class GameManager : MonoBehaviour
 
         // Increment wave
         currentWave++;
+
+        // If we've reached the end of the waves, win the game
+        if (currentWave >= numWaves)
+        {
+            //WinGame();
+
+            Debug.Log("All Waves Completed");
+        }
     }
 
     // Delay between spawns
@@ -156,9 +168,18 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemiesInWave; i++)
         {
             SpawnEnemy();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(interEnemyDelay);
 
         }
+
+        // Delay between waves
+        yield return new WaitForSeconds(waveDelay);
+        if (currentWave < numWaves)
+        {
+            SpawnWave();
+        }
+
+
     }
 
 
