@@ -23,20 +23,12 @@ public class CanvasManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateHealthBar();
-        UpdateScore();
         UpdateTime();
     }
 
     // --------------------------------------------------
     // HUD - UI Text Readouts
     // --------------------------------------------------
-
-
-    public TextMeshProUGUI pointsText;
-
-    // Update points in HUD
-    public void UpdateScore() => pointsText.text = "Score: " + GameManager.instance.score;
 
 
     // time
@@ -47,8 +39,6 @@ public class CanvasManager : MonoBehaviour
 
     // feedback
     public TextMeshProUGUI feedbackText;
-
-    public void AddPoints(int points) => GameManager.instance.score += points;
 
     public void SetFeedback(string feedback, float duration)
     {
@@ -62,30 +52,6 @@ public class CanvasManager : MonoBehaviour
         feedbackText.text = "";
     }
 
-    // Health Bar
-    public Image healthBar;
-
-    // Update Health Bar in HUD
-    public void UpdateHealthBar()
-    {
-        // Get Player health
-        float health = GameManager.instance.playerHealth / 100;
-
-        // if health is less than 0, set health to 0
-        if (health < 0)
-        {
-            health = 0;
-        }
-
-        // if health is greater than 1, set health to 1
-        if (health > 1)
-        {
-            health = 1;
-        }
-
-        // Set health bar to health
-        healthBar.transform.localScale = new Vector3(health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-    }
 
     // --------------------------------------------------
     // HUD - UI Buttons
