@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     public float health = 100;
 
+    [SerializeField]
     private Transform target;
 
     private int wayPointIndex = 1;
@@ -26,8 +27,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        wayPoints = new List<Transform>(WayPointManager.instance.pathA);
-        target = WayPointManager.instance.pathA[1];
+        //wayPoints = new List<Transform>(WayPointManager.instance.pathA);
+        target = wayPoints[wayPointIndex].transform;
     }
 
     void FixedUpdate()
