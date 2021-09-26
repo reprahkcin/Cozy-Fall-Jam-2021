@@ -4,6 +4,41 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    public Material towerMaterial;
+
+    public Color highlightColor = Color.yellow;
+
+    private Color originalColor = Color.white;
+
+    public void HighlightTower()
+    {
+        Debug.Log("Highlighted");
+
+        originalColor = towerMaterial.color;
+        // Set the color of the towerMaterial to the HighlightColor
+        towerMaterial.color = highlightColor;
+
+    }
+
+    public void UnhighlightTower()
+    {
+        // Set the color of the material to the original color
+        towerMaterial.color = originalColor;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public GameObject bullet;
 
     public float fireDelayInSeconds = 1f;
@@ -13,6 +48,8 @@ public class Tower : MonoBehaviour
     public float bulletSpeed = 1f;
 
     public float bulletDamage = 1f;
+
+    //public Outline outline;
 
     [SerializeField]
     private bool isCooledDown = true;
@@ -72,20 +109,25 @@ public class Tower : MonoBehaviour
 
     void Shoot(GameObject enemy)
     {
-        // if is cooled down
-        if (isCooledDown && isOccupied)
+        // if GameManager.instance.nutsToThrow > 0
+        if (GameManager.instance.nutsToThrow > 0)
         {
+            // if is cooled down
+            if (isCooledDown && isOccupied)
+            {
 
 
-            // create bullet as child of tower
-            GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
-            bulletClone.transform.parent = transform;
-            bulletClone.GetComponent<Projectile>().damage = bulletDamage;
-            // fire the bullet at the enemy
-            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - transform.position).normalized * bulletSpeed;
+                // create bullet as child of tower
+                GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
+                bulletClone.transform.parent = transform;
+                bulletClone.GetComponent<Projectile>().damage = bulletDamage;
+                // fire the bullet at the enemy
+                bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - transform.position).normalized * bulletSpeed;
 
-            isCooledDown = false;
-            StartCoroutine(FireCooldown());
+                isCooledDown = false;
+                StartCoroutine(FireCooldown());
+                GameManager.instance.RemoveNuts(1);
+            }
         }
     }
 
@@ -98,6 +140,16 @@ public class Tower : MonoBehaviour
     public void Occupy() => isOccupied = true;
 
     public void Vacate() => isOccupied = false;
+
+    //public void EnableOutline() => outline.enabled = true;
+
+    //public void DisableOutline() => outline.enabled = false;
+
+    // Get the child GameObject of the tower
+    public GameObject GetChild()
+    {
+        return transform.GetChild(0).gameObject;
+    }
 
 
 }
