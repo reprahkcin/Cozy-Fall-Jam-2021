@@ -14,8 +14,11 @@ public class Tower : MonoBehaviour
 
     public float bulletDamage = 10f;
 
+    private bool canFire = true;
 
-    public bool canFire = true; // occupied by squirrel
+    private bool isSelected = false; // occupied by squirrel
+
+
 
     public Transform squirrelNest;
 
@@ -69,7 +72,7 @@ public class Tower : MonoBehaviour
 
     void Shoot(GameObject enemy)
     {
-        if (canFire)
+        if (isSelected && canFire)
         {
             // create bullet as child of tower
             GameObject bulletClone = Instantiate(bullet, squirrelNest.position, Quaternion.identity);
@@ -88,4 +91,13 @@ public class Tower : MonoBehaviour
         yield return new WaitForSeconds(fireRate);
         canFire = true;
     }
+
+    public void ActivateTower()
+    {
+        GameManager.instance.DisableTowers();
+        isSelected = true;
+    }
+
+    public void DeactivateTower() => isSelected = false;
+
 }

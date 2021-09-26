@@ -28,6 +28,27 @@ public class GameManager : MonoBehaviour
         CanvasManager.instance.ActivateIntroPanel();
     }
 
+    private void Update()
+    {
+        // Debug.Log the tag of any object clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log(hit.transform.tag);
+
+                // if the tag is a Tower
+                if (hit.transform.tag == "Tower")
+                {
+                    hit.transform.GetComponent<Tower>().ActivateTower();
+                }
+            }
+        }
+    }
+
 
     void FixedUpdate()
     {
@@ -51,6 +72,8 @@ public class GameManager : MonoBehaviour
 
     // Current Level
     public int currentLevel;
+
+    public GameObject[] towers;
 
 
 
@@ -121,6 +144,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject enemyPrefab;
 
+    public float enemySpeed = 1.0f;
+
     public int enemiesInWave = 10;
 
     public int currentWave = 0;
@@ -185,6 +210,18 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // --------------------------------------------------
+    // Towers
+    // --------------------------------------------------
+
+    // Disable all towers
+    public void DisableTowers()
+    {
+        foreach (GameObject tower in towers)
+        {
+            tower.transform.GetComponent<Tower>().DeactivateTower();
+        }
+    }
 
 
 
