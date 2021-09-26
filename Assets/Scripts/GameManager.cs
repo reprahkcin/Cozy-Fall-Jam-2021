@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     {
         // Bring up Start/Intro Screen
         CanvasManager.instance.ActivateIntroPanel();
+        //DisableOutlines();
+        UnhighlightAll();
     }
 
     private void Update()
@@ -43,7 +45,22 @@ public class GameManager : MonoBehaviour
                 if (hit.transform.tag == "Tower")
                 {
                     VacateTowers();
+                    UnhighlightAll();
                     hit.transform.parent.GetComponent<Tower>().Occupy();
+                    //hit.transform.parent.GetComponent<Tower>().EnableOutline();
+                    hit.transform.parent.GetComponent<Tower>().HighlightTower();
+
+                }
+
+                // if the tag is "HomeTower"
+                if (hit.transform.tag == "HomeTower")
+                {
+                    VacateTowers();
+                    UnhighlightAll();
+                    HomeTower.instance.Occupy();
+                    HomeTower.instance.HighlightTower();
+                    if (GameManager.instance.nutsToThrow < 10)
+                    { GameManager.instance.AddNuts(2); }
                 }
             }
         }
@@ -63,8 +80,7 @@ public class GameManager : MonoBehaviour
     // Game Variables
     // --------------------------------------------------
 
-    // Defense Points
-    public int defensePoints = 10;
+
 
     // time/clock
     public float time;
@@ -74,6 +90,8 @@ public class GameManager : MonoBehaviour
     public int currentLevel;
 
     public GameObject[] towers;
+
+    public GameObject homeTower;
 
 
 
@@ -158,6 +176,9 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> enemies;
 
+
+
+
     // Spawns an enemy at the spawn point
     public void SpawnEnemy()
     {
@@ -217,8 +238,42 @@ public class GameManager : MonoBehaviour
         foreach (GameObject tower in towers)
         {
             tower.GetComponent<Tower>().Vacate();
+            // DisableOutlines();
         }
+        HomeTower.instance.Vacate();
     }
+
+    // public void DisableOutlines()
+    // {
+    //     foreach (GameObject tower in towers)
+    //     {
+    //         tower.GetComponent<Tower>().DisableOutline();
+
+    //     }
+    // }
+
+    public void UnhighlightAll()
+    {
+        foreach (GameObject tower in towers)
+        {
+            tower.GetComponent<Tower>().UnhighlightTower();
+
+        }
+        HomeTower.instance.UnhighlightTower();
+    }
+
+
+
+
+    // --------------------------------------------------
+    // Player Stats
+    // --------------------------------------------------
+
+    public int nutsToThrow = 10;
+
+    public void AddNuts(int nuts) => nutsToThrow += nuts;
+
+    public void RemoveNuts(int nuts) => nutsToThrow -= nuts;
 
 
 

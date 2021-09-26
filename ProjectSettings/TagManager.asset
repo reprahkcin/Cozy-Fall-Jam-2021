@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - Spawn
   - Tower
+  - HomeTower
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ public class CanvasManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateTime();
+        UpdateAcorns();
     }
 
     // --------------------------------------------------
@@ -31,11 +31,12 @@ public class CanvasManager : MonoBehaviour
     // --------------------------------------------------
 
 
-    // time
-    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI acornsText;
 
-    // Update time in HUD
-    public void UpdateTime() => timeText.text = "Time: " + GameManager.instance.time;
+    public void UpdateAcorns()
+    {
+        acornsText.text = "Acorns: " + GameManager.instance.nutsToThrow;
+    }
 
     // feedback
     public TextMeshProUGUI feedbackText;
