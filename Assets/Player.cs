@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Singleton
+    public static Player instance;
+
+    private Animator animator;
+
+    public float speed = 4f;
+
+    private Rigidbody rb;
+
+    private void Awake()
     {
-        
+        instance = this;
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MoveToPosition(Vector3 position)
     {
-        
+        // move to position at speed
+        rb.MovePosition(position * speed * Time.deltaTime);
+
+        // set animation
+        //animator.SetFloat("Speed", speed);
     }
 }

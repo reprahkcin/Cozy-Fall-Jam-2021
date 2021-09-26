@@ -30,8 +30,7 @@ Transform:
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -3.84, y: 0.66, z: 6.08}
   m_LocalScale: {x: 35.5215, y: 35.521492, z: 26.058569}
-  m_Children:
-  - {fileID: 7296151341986291461}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
@@ -115,35 +114,5 @@ MonoBehaviour:
   fireRange: 4
   bulletSpeed: 20
   bulletDamage: 10
-  squirrelNest: {fileID: 7296151341986291461}
+  squirrelNest: {fileID: 0}
   enemiesInRange: []
---- !u!1 &6711581300286318201
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7296151341986291461}
-  m_Layer: 0
-  m_Name: squirrel nest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7296151341986291461
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6711581300286318201}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0.050271355}
-  m_LocalScale: {x: 0.014075985, y: 0.019187547, z: 0.014075989}
-  m_Children: []
-  m_Father: {fileID: 106839431611396066}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

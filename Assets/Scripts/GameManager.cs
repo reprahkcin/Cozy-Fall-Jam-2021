@@ -43,7 +43,10 @@ public class GameManager : MonoBehaviour
                 // if the tag is a Tower
                 if (hit.transform.tag == "Tower")
                 {
-                    hit.transform.GetComponent<Tower>().ActivateTower();
+
+                    Debug.Log("Tower Clicked");
+
+
                 }
             }
         }
@@ -210,18 +213,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // --------------------------------------------------
-    // Towers
-    // --------------------------------------------------
 
-    // Disable all towers
-    public void DisableTowers()
-    {
-        foreach (GameObject tower in towers)
-        {
-            tower.transform.GetComponent<Tower>().DeactivateTower();
-        }
-    }
+
 
 
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // target to shoot at
-    public Transform target;
 
     // damage of the projectile (assigned at birth)
     public float damage;
