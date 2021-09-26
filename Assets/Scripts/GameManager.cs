@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // If # of nutsToThrow is less than 2
+        if (GameManager.instance.nutsToThrow < 2)
+        {
+            CanvasManager.instance.SetFeedback("Go restock at your home tree!", 2.0f);
+        }
         // Debug.Log the tag of any object clicked
         if (Input.GetMouseButtonDown(0))
         {
@@ -46,10 +51,14 @@ public class GameManager : MonoBehaviour
                 {
                     VacateTowers();
                     UnhighlightAll();
-                    hit.transform.parent.GetComponent<Tower>().Occupy();
+
                     //hit.transform.parent.GetComponent<Tower>().EnableOutline();
                     hit.transform.parent.GetComponent<Tower>().HighlightTower();
 
+                    // Move Squirrel to tower position at Squirrel.instance.speed
+                    Squirrel.instance.ChangeTarget(hit.transform.parent);
+
+                    hit.transform.parent.GetComponent<Tower>().Occupy();
                 }
 
                 // if the tag is "HomeTower"
@@ -59,12 +68,30 @@ public class GameManager : MonoBehaviour
                     UnhighlightAll();
                     HomeTower.instance.Occupy();
                     HomeTower.instance.HighlightTower();
+                    if (GameManager.instance.nutsToThrow < 9)
+                    {
+                        GameManager.instance.AddNuts(2);
+                        CanvasManager.instance.SetFeedback("+2 acorns!", 2.0f);
+                    }
+
                     if (GameManager.instance.nutsToThrow < 10)
-                    { GameManager.instance.AddNuts(2); }
+                    {
+                        GameManager.instance.AddNuts(1);
+                        CanvasManager.instance.SetFeedback("+1 acorn!", 2.0f);
+                    }
+                    else
+                    {
+                        CanvasManager.instance.SetFeedback("You have as many acorns as you can carry!", 3.0f);
+                    }
+
+                    Squirrel.instance.ChangeTarget(hit.transform.parent);
+
+
                 }
             }
         }
     }
+
 
 
     void FixedUpdate()

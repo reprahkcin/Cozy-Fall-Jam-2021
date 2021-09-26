@@ -137,7 +137,18 @@ public class Tower : MonoBehaviour
         isCooledDown = true;
     }
 
-    public void Occupy() => isOccupied = true;
+    public void Occupy()
+    {
+        StartCoroutine(WaitForTravel(1f));
+
+    }
+
+    IEnumerator WaitForTravel(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        isOccupied = true;
+    }
+
 
     public void Vacate() => isOccupied = false;
 
