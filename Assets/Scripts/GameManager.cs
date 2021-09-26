@@ -38,15 +38,12 @@ public class GameManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log(hit.transform.tag);
 
                 // if the tag is a Tower
                 if (hit.transform.tag == "Tower")
                 {
-
-                    Debug.Log("Tower Clicked");
-
-
+                    VacateTowers();
+                    hit.transform.parent.GetComponent<Tower>().Occupy();
                 }
             }
         }
@@ -214,7 +211,14 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    // Set all towers isOccupied to false
+    public void VacateTowers()
+    {
+        foreach (GameObject tower in towers)
+        {
+            tower.GetComponent<Tower>().Vacate();
+        }
+    }
 
 
 

@@ -14,7 +14,11 @@ public class Tower : MonoBehaviour
 
     public float bulletDamage = 1f;
 
-    public bool isCooledDown = true;
+    [SerializeField]
+    private bool isCooledDown = true;
+
+    [SerializeField]
+    private bool isOccupied = false;
 
     // make list of enemies in range
     public List<GameObject> enemiesInRange = new List<GameObject>();
@@ -69,7 +73,7 @@ public class Tower : MonoBehaviour
     void Shoot(GameObject enemy)
     {
         // if is cooled down
-        if (isCooledDown)
+        if (isCooledDown && isOccupied)
         {
 
 
@@ -90,6 +94,10 @@ public class Tower : MonoBehaviour
         yield return new WaitForSeconds(fireDelayInSeconds);
         isCooledDown = true;
     }
+
+    public void Occupy() => isOccupied = true;
+
+    public void Vacate() => isOccupied = false;
 
 
 }
