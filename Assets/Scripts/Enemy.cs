@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 10f;
+    private float speed;
 
     public float health = 100;
 
@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        speed = GameManager.instance.enemySpeed;
+
         // If game is not paused
         if (!GameManager.instance.gamePaused)
         {
