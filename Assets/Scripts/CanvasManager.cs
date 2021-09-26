@@ -58,20 +58,9 @@ public class CanvasManager : MonoBehaviour
     // --------------------------------------------------
     // TODO: Navigation buttons, start, exit, etc.
     // pause button
-    public Button pauseButton;
+    //public Button pauseButton;
 
-    // Update pause button in HUD
-    public void UpdatePauseButton()
-    {
-        if (GameManager.instance.gamePaused)
-        {
-            pauseButton.GetComponentInChildren<TextMeshProUGUI>().text = "Resume";
-        }
-        else
-        {
-            pauseButton.GetComponentInChildren<TextMeshProUGUI>().text = "Pause";
-        }
-    }
+
 
 
     // --------------------------------------------------

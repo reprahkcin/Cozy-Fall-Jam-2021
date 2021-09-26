@@ -6,22 +6,21 @@ public class Tower : MonoBehaviour
 {
     public GameObject bullet;
 
-    public float fireRate = 10f;
+    public float fireDelayInSeconds = 1f;
 
-    public float fireRange = 2f;
+    public float fireRange = 3f;
 
-    public float bulletSpeed = 10f;
+    public float bulletSpeed = 1f;
 
-    public float bulletDamage = 10f;
+    public float bulletDamage = 1f;
 
-
-    public bool canFire = true; // occupied by squirrel
-
-    public Transform squirrelNest;
-
+    public bool isCooledDown = true;
 
     // make list of enemies in range
     public List<GameObject> enemiesInRange = new List<GameObject>();
+
+
+
 
     private void Update()
     {
@@ -69,22 +68,28 @@ public class Tower : MonoBehaviour
 
     void Shoot(GameObject enemy)
     {
-        if (canFire)
+        // if is cooled down
+        if (isCooledDown)
         {
-            // create bullet as child of tower
-            GameObject bulletClone = Instantiate(bullet, squirrelNest.position, Quaternion.identity);
-            bulletClone.transform.parent = transform;
-            // fire the bullet at the enemy
-            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - squirrelNest.position).normalized * bulletSpeed;
 
-            canFire = false;
+
+            // create bullet as child of tower
+            GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
+            bulletClone.transform.parent = transform;
+            bulletClone.GetComponent<Projectile>().damage = bulletDamage;
+            // fire the bullet at the enemy
+            bulletClone.GetComponent<Rigidbody>().velocity = (enemy.transform.position - transform.position).normalized * bulletSpeed;
+
+            isCooledDown = false;
             StartCoroutine(FireCooldown());
         }
     }
 
     IEnumerator FireCooldown()
     {
-        yield return new WaitForSeconds(fireRate);
-        canFire = true;
+        yield return new WaitForSeconds(fireDelayInSeconds);
+        isCooledDown = true;
     }
+
+
 }

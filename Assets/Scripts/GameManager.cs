@@ -28,6 +28,30 @@ public class GameManager : MonoBehaviour
         CanvasManager.instance.ActivateIntroPanel();
     }
 
+    private void Update()
+    {
+        // Debug.Log the tag of any object clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log(hit.transform.tag);
+
+                // if the tag is a Tower
+                if (hit.transform.tag == "Tower")
+                {
+
+                    Debug.Log("Tower Clicked");
+
+
+                }
+            }
+        }
+    }
+
 
     void FixedUpdate()
     {
@@ -51,6 +75,8 @@ public class GameManager : MonoBehaviour
 
     // Current Level
     public int currentLevel;
+
+    public GameObject[] towers;
 
 
 
@@ -118,9 +144,10 @@ public class GameManager : MonoBehaviour
     // --------------------------------------------------
     // Enemy Spawning
     // --------------------------------------------------
-    public Transform spawnPoint;
 
     public GameObject enemyPrefab;
+
+    public float enemySpeed = 1.0f;
 
     public int enemiesInWave = 10;
 
@@ -137,8 +164,12 @@ public class GameManager : MonoBehaviour
     // Spawns an enemy at the spawn point
     public void SpawnEnemy()
     {
-        // Instantiate enemy at spawn point
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        List<Transform> path = new List<Transform>(WayPointManager.instance.RandomPath());
+        //List<Transform> path = new List<Transform>(WayPointManager.instance.pathA);
+
+        // Instantiate enemy at WayPointManager.instance.pathA[0].position
+        GameObject enemy = Instantiate(enemyPrefab, path[0].position, Quaternion.identity);
+        enemy.GetComponent<Enemy>().SetPath(path);
 
         // Add enemy to list
         enemies.Add(enemy);
@@ -181,6 +212,8 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+
 
 
 

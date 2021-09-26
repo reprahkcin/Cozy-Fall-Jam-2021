@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WayPointManager : MonoBehaviour
 {
-    public static WayPointManager Instance;
+    public static WayPointManager instance;
 
     public Transform SpawnPoint1;
     public Transform SpawnPoint2;
@@ -18,63 +18,99 @@ public class WayPointManager : MonoBehaviour
 
     public Transform endPoint;
 
-    public static Transform[] pathA;
-    public static Transform[] pathB;
-    public static Transform[] pathC;
-    public static Transform[] pathD;
-    public static Transform[] pathE;
+    public List<Transform> pathA;
+    public List<Transform> pathB;
+    public List<Transform> pathC;
+    public List<Transform> pathD;
+    public List<Transform> pathE;
+
+    public List<Transform> RandomPath()
+    {
+        // generate random number for 5 choices
+        int random = Random.Range(0, 5);
+
+
+        switch (random)
+        {
+            case 0:
+                return pathA;
+
+            case 1:
+                return pathB;
+
+            case 2:
+                return pathC;
+
+            case 3:
+                return pathD;
+
+            case 4:
+                return pathE;
+
+            default: return pathA;
+        }
+    }
+
+
 
     void Awake()
     {
 
-        Instance = this;
+        instance = this;
 
-        pathA = new Transform[waypointsA.transform.childCount + 1];
-        for (int i = 0; i < pathA.Length; i++)
+        pathA = new List<Transform>();
+        pathB = new List<Transform>();
+        pathC = new List<Transform>();
+        pathD = new List<Transform>();
+        pathE = new List<Transform>();
+
+
+        // add the spawn point to the list
+        pathA.Add(SpawnPoint1);
+        foreach (Transform child in waypointsA.transform)
         {
-            pathA[i] = transform.GetChild(i);
+            pathA.Add(child);
         }
+        // add the end point to the list
+        pathA.Add(endPoint);
 
-        // put the end point at the end of the array
-        pathA[pathA.Length - 1] = endPoint;
-
-
-        pathB = new Transform[waypointsB.transform.childCount + 1];
-        for (int i = 0; i < pathB.Length; i++)
+        // add the spawn point to the list
+        pathB.Add(SpawnPoint1);
+        foreach (Transform child in waypointsB.transform)
         {
-            pathB[i] = transform.GetChild(i);
+            pathB.Add(child);
         }
+        // add the end point to the list
+        pathB.Add(endPoint);
 
-        // put the end point at the end of the array
-        pathB[pathB.Length - 1] = endPoint;
-
-
-        pathC = new Transform[waypointsC.transform.childCount + 1];
-        for (int i = 0; i < pathC.Length; i++)
+        // add the spawn point to the list
+        pathC.Add(SpawnPoint2);
+        foreach (Transform child in waypointsC.transform)
         {
-            pathC[i] = transform.GetChild(i);
+            pathC.Add(child);
         }
+        // add the end point to the list
+        pathC.Add(endPoint);
 
-        // put the end point at the end of the array
-        pathC[pathC.Length - 1] = endPoint;
-
-        pathD = new Transform[waypointsD.transform.childCount + 1];
-        for (int i = 0; i < pathD.Length; i++)
+        // add the spawn point to the list
+        pathD.Add(SpawnPoint2);
+        foreach (Transform child in waypointsD.transform)
         {
-            pathD[i] = transform.GetChild(i);
+            pathD.Add(child);
         }
+        // add the end point to the list
+        pathD.Add(endPoint);
 
-        // put the end point at the end of the array
-        pathD[pathD.Length - 1] = endPoint;
-
-        pathE = new Transform[waypointsE.transform.childCount + 1];
-        for (int i = 0; i < pathE.Length; i++)
+        // add the spawn point to the list
+        pathE.Add(SpawnPoint3);
+        foreach (Transform child in waypointsE.transform)
         {
-            pathE[i] = transform.GetChild(i);
+            pathE.Add(child);
         }
+        // add the end point to the list
+        pathE.Add(endPoint);
 
-        // put the end point at the end of the array
-        pathE[pathE.Length - 1] = endPoint;
+
     }
 
 }
