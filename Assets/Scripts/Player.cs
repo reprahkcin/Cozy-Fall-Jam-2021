@@ -5,8 +5,8 @@ public class Player : MonoBehaviour
     // Singleton
     public static Player instance;
 
-    private Animator animator;
-
+    public Transform[] treeSpots;
+    
     public float speed = 4f;
 
     private Rigidbody rb;
@@ -16,13 +16,11 @@ public class Player : MonoBehaviour
         instance = this;
         rb = GetComponent<Rigidbody>();
     }
-
-    public void MoveToPosition(Vector3 position)
+    public void MoveToPosition(Transform target)
     {
-        // move to position at speed
-        rb.MovePosition(position * speed * Time.deltaTime);
-
-        // set animation
-        //animator.SetFloat("Speed", speed);
+        // move to target at speed
+        Vector3 direction = target.position - transform.position;
+        direction.y = 0;
+        rb.velocity = direction.normalized * speed;
     }
 }

@@ -11,6 +11,8 @@ TagManager:
   - Spawn
   - Tower
   - HomeTower
+  - ParkingSpace
+  - BaseTree
   layers:
   - Default
   - TransparentFX
