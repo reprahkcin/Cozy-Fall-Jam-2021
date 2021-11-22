@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool _isOccupied;
+    
+    public bool IsOccupied
     {
-        
+        get { return _isOccupied; }
+        set { _isOccupied = value; }
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            _isOccupied = true;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isOccupied = false;
+        }
     }
 }
+

@@ -1,15 +1,15 @@
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     // Singleton
     public static Player instance;
-
-    public Transform[] treeSpots;
-    
+    public Transform[] nests;
     public float speed = 4f;
-
     private Rigidbody rb;
+    
+    public int acorns = 0;
 
     private void Awake()
     {

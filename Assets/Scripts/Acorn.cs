@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Acorn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private float _damage;
+    public float lifetime = 0.3f;
+    public float Damage
     {
-        
+        get { return _damage; }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Destroy(gameObject, lifetime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Car") || other.CompareTag("Patron"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

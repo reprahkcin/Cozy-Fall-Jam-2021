@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseTree : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Singleton
+    public static BaseTree instance;
+    public Material towerMaterial;
+    private Color originalColor = Color.white;
+    public Color highlightColor = Color.yellow;
+
+    private Player player;
+    
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void RestockPlayer()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
