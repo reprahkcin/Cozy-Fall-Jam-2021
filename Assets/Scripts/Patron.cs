@@ -10,7 +10,12 @@ public class Patron : MonoBehaviour
     public Transform currentTarget;
     
     private Rigidbody rb;
-    
+
+    private void Awake()
+    {
+        // TODO: Modify the color of the patron
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();

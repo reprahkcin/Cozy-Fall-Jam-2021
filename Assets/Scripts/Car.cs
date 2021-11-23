@@ -4,14 +4,35 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public float speed = 10f;
-    public float turnSpeed = 10f;
-    public bool isDriving;
-    public Transform currentTarget;
-    private Queue<Transform> waypoints;
+    private float _speed = 10f;
+    private float _turnSpeed = 10f;
+    private bool _isDriving;
+    private Transform _currentTarget;
+    private Transform _laneTarget;
+    private ParkingSpace _parkingSpace;
+    public Transform[] patronStandingPositions;
     public GameObject[] patrons;
+    public GameObject patronPrefab;
 
-    public Transform[] pathIn;
-    public Transform[] pathOut;
+    private void Awake()
+    {
+        var renderer = GetComponent<Renderer>();
+        renderer.material.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+    }
 
+    public void AddParkingSpace(ParkingSpace parkingSpace)
+    {
+        _parkingSpace = parkingSpace;
+    }
+
+    public void OccupyCar()
+    {
+        int randomNumber = UnityEngine.Random.Range(0, 4);
+        patrons = new GameObject[randomNumber];
+        for (int i = 0; i < randomNumber; i++)
+        {
+            var patron = Instantiate(patronPrefab, patronStandingPositions[i].position, Quaternion.identity);
+            patrons[i] = patron;
+        }
+    }
 }
